@@ -128,7 +128,7 @@ MBitmap* MDrawContext::SetBitmap(MBitmap* pBitmap)
 {
 	/*
 #ifdef _DEBUG
-	// °°Àº ·¹º§ÀÇ ¿ÀºêÁ§Æ®ÀÌ¿©¾ß ÇÑ´Ù.
+	// ê°™ì€ ë ˆë²¨ì˜ ì˜¤ë¸Œì íŠ¸ì´ì—¬ì•¼ í•œë‹¤.
 	if(pBitmap!=NULL) _ASSERT(m_nTypeID==pBitmap->m_nTypeID);
 #endif
 	*/
@@ -141,7 +141,7 @@ MBitmap* MDrawContext::SetBitmap(MBitmap* pBitmap)
 MFont* MDrawContext::SetFont(MFont* pFont)
 {
 //#ifdef _DEBUG
-//	// °°Àº ·¹º§ÀÇ ¿ÀºêÁ§Æ®ÀÌ¿©¾ß ÇÑ´Ù.
+//	// ê°™ì€ ë ˆë²¨ì˜ ì˜¤ë¸Œì íŠ¸ì´ì—¬ì•¼ í•œë‹¤.
 //	if(pFont!=NULL) _ASSERT(m_nTypeID==pFont->m_nTypeID);
 //#endif
 
@@ -227,7 +227,7 @@ int GetStrLengthOfWidth(MFont* pFont, int w, char* szText)
 
 	int nRecWidth = GetStrLength(pFont, szText, nRecStrLen);
 
-	if(nRecWidth>w){	// ³ÑÄ¡´Â °æ¿ì
+	if(nRecWidth>w){	// ë„˜ì¹˜ëŠ” ê²½ìš°
 		do{
 			nRecStrLen--;
 			nRecWidth = GetStrLength(pFont, szText, nRecStrLen);
@@ -253,7 +253,7 @@ int MDrawContext::TextWithHighlight(int x, int y, const char* szText)
 	char cHighlight;
 
 	int nPos = RemoveAnd(szFront, &cHighlight, szBack, szText);
-	if(nPos==-1){	// Highlight(Underline) ¹®ÀÚ°¡ ¾øÀ» °æ¿ì
+	if(nPos==-1){	// Highlight(Underline) ë¬¸ìê°€ ì—†ì„ ê²½ìš°
 		return Text(x, y, szText);
 	}
 	else{
@@ -270,7 +270,7 @@ int MDrawContext::TextWithHighlight(int x, int y, const char* szText)
 			return Text(x+nFrontWidth+nHighlightWidth, y, szBack);
 		}
 		else{
-			return Text(x, y, szText);		// Font°¡ ·ÎµåµÇÁö ¾Ê¾ÒÀ» °æ¿ì &°¡ ÀÖ´Â »óÅÂ ±×´ë·Î Ç¥Çö
+			return Text(x, y, szText);		// Fontê°€ ë¡œë“œë˜ì§€ ì•Šì•˜ì„ ê²½ìš° &ê°€ ìˆëŠ” ìƒíƒœ ê·¸ëŒ€ë¡œ í‘œí˜„
 		}
 	}
 }
@@ -283,7 +283,7 @@ void MDrawContext::GetPositionOfAlignment(MPOINT* p, MRECT& r, const char* szTex
 		else w = m_pFont->GetWidthWithoutAmpersand(szText);
 		int h = m_pFont->GetHeight();
 
-#define DEFAULT_ALIGN_MARGIN	2	// ÁÂ¿ì Á¤·Ä½Ã ÁÂ¿ì¿¡ ³²°ÜÁú ÃÖ¼ÒÀÇ ¿©¹é
+#define DEFAULT_ALIGN_MARGIN	2	// ì¢Œìš° ì •ë ¬ì‹œ ì¢Œìš°ì— ë‚¨ê²¨ì§ˆ ìµœì†Œì˜ ì—¬ë°±
 		p->x = r.x;
 		p->y = r.y;
 		if(am&MAM_LEFT){
@@ -328,7 +328,7 @@ int MDrawContext::TextWithHighlight(MRECT& r, const char* szText, MAlignmentMode
 	char cHighlight;
 
 	int nPos = RemoveAnd(szFront, &cHighlight, szBack, szText);
-	if(nPos==-1){	// Highlight(Underline) ¹®ÀÚ°¡ ¾øÀ» °æ¿ì
+	if(nPos==-1){	// Highlight(Underline) ë¬¸ìê°€ ì—†ì„ ê²½ìš°
 		return Text(r, szText, am);
 	}
 	else{
@@ -408,17 +408,17 @@ void MDrawContext::TextMC(int x, int y, const char* szText)
 		nPos = strcspn(pSrc, "^");
 		pText = new char[nPos + 1];// (char *)malloc(nPos + 1);
 		if(pText){
-			strncpy(pText, pSrc, nPos);				// »çÀÌÁî¸¸Å­ Ä«ÇÇ
-			pText[nPos] = '\0';						// ¹®ÀÚ¿­ ¸¸µé°í,
-			Text(x+nOffset, y, pText);		// Ãâ·Â
+			strncpy(pText, pSrc, nPos);				// ì‚¬ì´ì¦ˆë§Œí¼ ì¹´í”¼
+			pText[nPos] = '\0';						// ë¬¸ìì—´ ë§Œë“¤ê³ ,
+			Text(x+nOffset, y, pText);		// ì¶œë ¥
 			nOffset += GetFont()->GetWidth(pText);
-			delete[] pText;							// ÅØ½ºÆ® ¹öÆÛ »èÁ¦
+			delete[] pText;							// í…ìŠ¤íŠ¸ ë²„í¼ ì‚­ì œ
 		}
 
 		nLen = strlen(pSrc);
 
 		if(nPos + 1 < strlen(pSrc)){
-			//ÄÃ·¯ ÁöÁ¤
+			//ì»¬ëŸ¬ ì§€ì •
 			if(TestDigit(pSrc[nPos+1])){
 				SetColor(MCOLOR(MMColorSet[pSrc[nPos+1] - '0']));
 				pSrc = pSrc + nPos + 2;
@@ -455,7 +455,7 @@ char *MDrawContext::GetPureText(const char *szText)
 	while(true){
 		nPos = strcspn(pSrc, "^");
 
-		strncat(pText, pSrc, nPos);				// »çÀÌÁî¸¸Å­ Ä«ÇÇ
+		strncat(pText, pSrc, nPos);				// ì‚¬ì´ì¦ˆë§Œí¼ ì¹´í”¼
 		nLen = strlen(pSrc);
 
 		if(nPos + 1 < strlen(pSrc)){
@@ -483,7 +483,7 @@ char *MDrawContext::GetPureText(const char *szText)
 
 #include "MDebug.h"
 
-// µÑÂ°ÁÙºÎÅÍ nIndentation¸¸Å­ µé¿©¾²±â¸¦ ÇÑ´Ù, skipline¸¸Å­ À­¶óÀÎÀ» »©°í Ãâ·ÂÇÑ´Ù.
+// ë‘˜ì§¸ì¤„ë¶€í„° nIndentationë§Œí¼ ë“¤ì—¬ì“°ê¸°ë¥¼ í•œë‹¤, skiplineë§Œí¼ ìœ—ë¼ì¸ì„ ë¹¼ê³  ì¶œë ¥í•œë‹¤.
 int MDrawContext::TextMultiLine(MRECT& r, const char* szText,int nLineGap,bool bAutoNextLine,int nIndentation,int nSkipLine, MPOINT* pPositions)
 {
 	bool bColorSupport=true;
@@ -499,6 +499,12 @@ int MDrawContext::TextMultiLine(MRECT& r, const char* szText,int nLineGap,bool b
 	const char* szCurrent=szText;
 	MPOINT* pCurrentPos = pPositions;
 	do {
+	MCOLOR prevColor = GetColor();
+        SetColor(0xFF000000); //chat background
+	char* szCurrentCpy = GetPureText(szCurrent);
+	FillRectangle(r.x, y, pFont->GetWidth(szCurrentCpy), pFont->GetHeight());
+	pFont->GetWidth(szCurrentCpy), 200.f * 1.1 / 800.f * (float)MGetWorkspaceWidth();
+	SetColor(prevColor);	
 		int nX = nLine==0 ? 0 : nIndentation;
 
 		int nOriginalCharCount = MMGetNextLinePos(pFont,szCurrent,r.w-nX,bAutoNextLine,true);
@@ -509,7 +515,7 @@ int MDrawContext::TextMultiLine(MRECT& r, const char* szText,int nLineGap,bool b
 			char buffer[256];
 			if(bColorSupport) {
 
-// Text°¡ ±×·ÁÁö´Â Æ÷Áö¼Ç Á¤º¸¸¦ Ã¤¿ö ³Ö´Â´Ù.
+// Textê°€ ê·¸ë ¤ì§€ëŠ” í¬ì§€ì…˜ ì •ë³´ë¥¼ ì±„ì›Œ ë„£ëŠ”ë‹¤.
 #define FLUSHPOS(_Pos)		if(pCurrentPos!=NULL){	\
 								for(int i=0; buffer[i]!=NULL; i++){	\
 									pCurrentPos[i+szCurrent-szText].x = _Pos+pFont->GetWidth(buffer, i);	\
@@ -530,7 +536,7 @@ int MDrawContext::TextMultiLine(MRECT& r, const char* szText,int nLineGap,bool b
 					if(c=='^' && ('0'<=cc) && (cc<='9'))
 					{
 						FLUSH;
-						// Ã¤ÆÃ·ë ½ºÆ®¸µ »öÀû¿ë
+						// ì±„íŒ…ë£¸ ìŠ¤íŠ¸ë§ ìƒ‰ì ìš©
 						SetColor(MCOLOR(MMColorSet[cc - '0']));
 						i++;
 						continue;
@@ -571,7 +577,7 @@ int MDrawContext::TextMultiLine(MRECT& r, const char* szText,int nLineGap,bool b
 	return nLine-nSkipLine;
 }
 
-// TODO: TextMultiLine2¸¦ ¾ø¾Ö°í alignÀ» TextMultiLine¿¡ ÅëÇÕÇÑ´Ù
+// TODO: TextMultiLine2ë¥¼ ì—†ì• ê³  alignì„ TextMultiLineì— í†µí•©í•œë‹¤
 int MDrawContext::TextMultiLine2( MRECT& r, const char* szText,int nLineGap,bool bAutoNextLine,MAlignmentMode am )
 {
 	MFont* pFont = GetFont();
@@ -582,7 +588,7 @@ int MDrawContext::TextMultiLine2( MRECT& r, const char* szText,int nLineGap,bool
 	int nStrLen = strlen(szText);
 	int nX = 0;
 	int nCurrLine = 0;
-	int IncY = nHeight;//( r.h	/ nLine ) ; // ¼¼·ÎÃà ÁõºĞ
+	int IncY = nHeight;//( r.h	/ nLine ) ; // ì„¸ë¡œì¶• ì¦ë¶„
 
 #define		MAX_WIDGET_LINE_LENGTH	1024
 	int clip = 0;
@@ -642,8 +648,8 @@ int MDrawContext::TextMultiLine2( MRECT& r, const char* szText,int nLineGap,bool
 			TempStr[i-clip] = '\0';
 			Text( rTemp, TempStr, am );
 			
-			// "clip"Àº ÇÑÁÙ µÎÁÙ ³Ñ¾î°¥¶§¸¶´Ù ´ÙÀ½ÁÙ ½ÃÀÛÇÒ ½ºÆ®¸µ À§Ä¡ ³Ñ¹ö¸¦ ³Ö¾îÁØ´Ù.
-			// ´ÙÀ½ÁÙ Ã³À½ ½ÃÀÛÇÒ ½ºÆ®¸µÀÌ 1Byte È¤Àº 2Byte µû¶ó¼­ Å¬¸³ À§Ä¡°¡ ´Ù¸£´Ù.
+			// "clip"ì€ í•œì¤„ ë‘ì¤„ ë„˜ì–´ê°ˆë•Œë§ˆë‹¤ ë‹¤ìŒì¤„ ì‹œì‘í•  ìŠ¤íŠ¸ë§ ìœ„ì¹˜ ë„˜ë²„ë¥¼ ë„£ì–´ì¤€ë‹¤.
+			// ë‹¤ìŒì¤„ ì²˜ìŒ ì‹œì‘í•  ìŠ¤íŠ¸ë§ì´ 1Byte í˜¹ì€ 2Byte ë”°ë¼ì„œ í´ë¦½ ìœ„ì¹˜ê°€ ë‹¤ë¥´ë‹¤.
 			clip = c>127 ? i-1 : i;
 
 			continue;
@@ -656,10 +662,10 @@ int MDrawContext::TextMultiLine2( MRECT& r, const char* szText,int nLineGap,bool
 	rTemp.w	= r.w;
 	rTemp.h	= IncY;
 
-	// ÀÌ ÇÔ¼ö´Â ¸ÖÆ¼¶óÀÎ Ãâ·Â¿ëÀÌ¶ó¼­ VCENTER Á¤·ÄÀÌ ¸ÔÁö ¾Ê°Ô µÈ´Ù. ¿Ö³ÄÇÏ¸é rTemp.h = IncY´Â °ğ ÆùÆ® ³ôÀÌÀÌ¹Ç·Î
-	// ¼¼·Î Áß¾Ó Á¤·ÄÇØºÃÀÚ ÀÇ¹Ì°¡ ¾ø´Ù. VCENTER Á¤·Ä ¹®Á¦¸¦ Á¦´ë·Î Ã³¸®ÇÏ±â À§ÇØ¼­´Â ÀüÃ¼ ÁÙ¼ö¸¦ ¹Ì¸® °è»êÇÏ°í
-	// ÅØ½ºÆ®¸¦ Ãâ·ÂÇØ¾ß ÇÒ °ÍÀÌ´Ù.
-	// ÀÏ´Ü ¹®ÀÚ¿­ÀÌ 1ÁÙÂ¥¸®ÀÎ °æ¿ì¿¡ ÇÑÇØ¼­¸¸ VCENTER Á¤·ÄÀÌ ¸ÔÁö ¾Ê´Â ¹®Á¦¸¦ ¶«»§ÇÏ´Â ÄÚµå¸¦ ¾Æ·¡¿Í °°ÀÌ »ğÀÔÇß´Ù.
+	// ì´ í•¨ìˆ˜ëŠ” ë©€í‹°ë¼ì¸ ì¶œë ¥ìš©ì´ë¼ì„œ VCENTER ì •ë ¬ì´ ë¨¹ì§€ ì•Šê²Œ ëœë‹¤. ì™œëƒí•˜ë©´ rTemp.h = IncYëŠ” ê³§ í°íŠ¸ ë†’ì´ì´ë¯€ë¡œ
+	// ì„¸ë¡œ ì¤‘ì•™ ì •ë ¬í•´ë´¤ì ì˜ë¯¸ê°€ ì—†ë‹¤. VCENTER ì •ë ¬ ë¬¸ì œë¥¼ ì œëŒ€ë¡œ ì²˜ë¦¬í•˜ê¸° ìœ„í•´ì„œëŠ” ì „ì²´ ì¤„ìˆ˜ë¥¼ ë¯¸ë¦¬ ê³„ì‚°í•˜ê³ 
+	// í…ìŠ¤íŠ¸ë¥¼ ì¶œë ¥í•´ì•¼ í•  ê²ƒì´ë‹¤.
+	// ì¼ë‹¨ ë¬¸ìì—´ì´ 1ì¤„ì§œë¦¬ì¸ ê²½ìš°ì— í•œí•´ì„œë§Œ VCENTER ì •ë ¬ì´ ë¨¹ì§€ ì•ŠëŠ” ë¬¸ì œë¥¼ ë•œë¹µí•˜ëŠ” ì½”ë“œë¥¼ ì•„ë˜ì™€ ê°™ì´ ì‚½ì…í–ˆë‹¤.
 	if (nCurrLine == 0)
 		rTemp.h = r.h;
 
@@ -761,14 +767,14 @@ int MMGetLinePos(MFont *pFont,const char* szText, int nWidth, bool bAutoNextLine
 	int nX = 0;
 	int nCurLine = 0;
 
-	int nThisChar=0;	// ÇöÀç ±ÛÀÚÀÇ ½ÃÀÛ ÀÎµ¦½º
+	int nThisChar=0;	// í˜„ì¬ ê¸€ìì˜ ì‹œì‘ ì¸ë±ìŠ¤
 
 	for(int i=0; i<nStrLen; i++){
 
 		if(nCurLine==nLine) 
 			return nThisChar;
 
-		nThisChar = i;	// ÇöÀç ±ÛÀÚÀÇ ½ÃÀÛ ÀÎµ¦½º
+		nThisChar = i;	// í˜„ì¬ ê¸€ìì˜ ì‹œì‘ ì¸ë±ìŠ¤
 
 		char temp[3] = {0, 0, 0};
 		temp[0] = szText[i];
@@ -798,7 +804,7 @@ int MMGetLinePos(MFont *pFont,const char* szText, int nWidth, bool bAutoNextLine
 			int w = pFont->GetWidth(temp);
 			if(nX+w>nWidth){
 				nCurLine++;
-				nX = nIndentation;	// µÑÂ°ÁÙºÎÅÍ´Â ½ÃÀÛÀ§Ä¡°¡ ´Ù¸£´Ù.
+				nX = nIndentation;	// ë‘˜ì§¸ì¤„ë¶€í„°ëŠ” ì‹œì‘ìœ„ì¹˜ê°€ ë‹¤ë¥´ë‹¤.
 			}
 			nX += w;
 		}
@@ -810,7 +816,7 @@ int MMGetLinePos(MFont *pFont,const char* szText, int nWidth, bool bAutoNextLine
 	return nStrLen;
 }
 
-// ´ÙÀ½ ÁÙÀÇ ½ÃÀÛ À§Ä¡¸¦ ¸®ÅÏÇÑ´Ù
+// ë‹¤ìŒ ì¤„ì˜ ì‹œì‘ ìœ„ì¹˜ë¥¼ ë¦¬í„´í•œë‹¤
 int MMGetNextLinePos(MFont *pFont,const char* szText, int nWidth, bool bAutoNextLine, bool bColorSupport)
 {
 	return MMGetLinePos(pFont,szText,nWidth,bAutoNextLine,bColorSupport);
